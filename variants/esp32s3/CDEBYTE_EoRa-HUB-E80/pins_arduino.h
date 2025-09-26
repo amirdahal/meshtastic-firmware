@@ -1,43 +1,28 @@
-{
-    "build": {
-        "arduino": {
-            "ldscript": "esp32s3_out.ld",
-                "partitions" : "default.csv",
-                "memory_type" : "qio_qspi"
-        },
-            "core" : "esp32",
-            "extra_flags" : [
-                "-DBOARD_HAS_PSRAM",
-                "-DARDUINO_USB_CDC_ON_BOOT=0",
-                "-DARDUINO_RUNNING_CORE=1",
-                "-DARDUINO_EVENT_RUNNING_CORE=1"
-            ] ,
-            "f_cpu": "240000000L",
-            "f_flash" : "80000000L",
-            "flash_mode" : "qio",
-            "mcu" : "esp32s3",
-            "variant" : "esp32s3"
-    },
-        "connectivity": [
-            "wifi"
-        ] ,
-        "debug" : {
-        "openocd_target": "esp32s3.cfg"
-    },
-        "frameworks" : [
-            "arduino",
-            "espidf"
-        ] ,
-        "name" : "CDEBYTE_EoRa-HUB-E80",
-        "upload" : {
-        "flash_size": "4MB",
-            "maximum_ram_size" : 327680,
-            "maximum_size" : 4194304,
-            "use_1200bps_touch" : true,
-            "wait_for_upload_port" : true,
-            "require_upload_port" : true,
-            "speed" : 921600
-    },
-        "url": "https://www.cdebyte.com/products/EoRa-HUB-900TB",
-        "vendor" : "EoRa"
-}
+// Need this file for ESP32-S3
+// No need to modify this file, changes to pins imported from variant.h
+// Most is similar to https://github.com/espressif/arduino-esp32/blob/master/variants/esp32s3/pins_arduino.h
+
+#ifndef Pins_Arduino_h
+#define Pins_Arduino_h
+
+#include <stdint.h>
+#include <variant.h>
+
+#define USB_VID 0x303a
+#define USB_PID 0x1001
+
+// Serial
+static const uint8_t TX = UART_TX;
+static const uint8_t RX = UART_RX;
+
+// Default SPI will be mapped to Radio
+static const uint8_t SS = LORA_CS;
+static const uint8_t SCK = LORA_SCK;
+static const uint8_t MOSI = LORA_MOSI;
+static const uint8_t MISO = LORA_MISO;
+
+// The default Wire will be mapped to PMU and RTC
+static const uint8_t SCL = I2C_SCL;
+static const uint8_t SDA = I2C_SDA;
+
+#endif /* Pins_Arduino_h */
